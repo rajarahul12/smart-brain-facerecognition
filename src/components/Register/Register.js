@@ -83,7 +83,11 @@ class Register extends Component {
 					      type="submit" 
 					      value="Register" />
 					    </div>
+					    <div className="mv4">
+					    	<p><span style={{color:'red'}}>*</span>Your details are encrypted and safe with us</p>
+					    </div>
 					  </div>
+
 					</main>
 				</article>
 				</div>

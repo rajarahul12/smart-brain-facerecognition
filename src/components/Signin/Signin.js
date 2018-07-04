@@ -72,6 +72,9 @@ class Signin extends Component{
 					    <div className="lh-copy mt3">
 					      <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
 					    </div>
+					    <div className="mv4">
+					    	<p><span style={{color:'red'}}>*</span>Your details are encrypted and safe with us</p>
+					    </div>
 					  </div>
 					</main>
 				</article>
