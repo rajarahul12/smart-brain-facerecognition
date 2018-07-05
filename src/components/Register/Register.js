@@ -40,6 +40,12 @@ class Register extends Component {
 				this.props.loadUser(user);
 				this.props.onRouteChange('home');
 			}
+			else if(user === "incorrect form submission"){
+				document.getElementById('err').textContent="Enter all fields";
+				setTimeout(()=> {
+					document.getElementById('err').textContent="";
+				} ,3000);
+			}
 		});
 	}
 
@@ -51,6 +57,7 @@ class Register extends Component {
 					<div className="measure">
 					    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
 					      <legend className="f1 fw6 ph0 mh0">Register</legend>
+					      <div className="mt3" id="err" style={{background:'red'}}></div>
 					      <div className="mt3">
 					        <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
 					        <input onChange={this.onNameChange}

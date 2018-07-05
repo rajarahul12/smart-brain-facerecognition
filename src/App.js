@@ -11,10 +11,22 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import 'tachyons';
 
 
-const particleOptions={
+const particleOptions1={
   particles:{
     number:{
-      value:80,
+      value:100,
+      density:{
+        enable:true,
+        value_area:900
+      }
+    }
+  }
+};
+
+const particleOptions2={
+  particles:{
+    number:{
+      value:60,
       density:{
         enable:true,
         value_area:900
@@ -132,9 +144,17 @@ class App extends Component {
     const { imageUrl , box , route , isSignedIn } = this.state;
     return (
       <div className="App">
-        <Particles className='particles'
-          params={particleOptions}
-        />
+        {
+          window.innerWidth < 500 ?
+            <Particles className='particles'
+            params={particleOptions2}
+            />
+          :
+            <Particles className='particles'
+            params={particleOptions1}
+            />
+
+        }
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         
         { route === 'home' 
