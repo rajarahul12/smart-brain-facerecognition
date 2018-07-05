@@ -85,7 +85,6 @@ class App extends Component {
 
   //Displaying the box around faces
   displayFaceBox=(box)=>{
-    console.log(box);
     this.setState({box:box});
   }
 
@@ -94,8 +93,13 @@ class App extends Component {
     this.setState({input:event.target.value});
   }
 
+
   //After Button Submit
   onButtonSubmit=()=>{
+    if(this.state.input === ""){
+      
+    }
+    else{
     this.setState({imageUrl:this.state.input});
     fetch('https://gorgeous-mesa-verde-76417.herokuapp.com/imageUrl',{
           method:'post',
@@ -127,6 +131,7 @@ class App extends Component {
       this.displayFaceBox(this.calculateFaceLocation(response))
       })
     .catch(error => console.log(error));
+  }
   }
 
   //On Route change to know where the user is
@@ -161,7 +166,7 @@ class App extends Component {
         ? <div> 
             <Logo />
             <Rank name={this.state.user.name} entries={this.state.user.entries} />
-            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
+            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
             <FaceRecognition box={box}  imageUrl={imageUrl}/>
           </div>
         : (
