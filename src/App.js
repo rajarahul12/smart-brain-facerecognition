@@ -38,7 +38,12 @@ const particleOptions2={
 const initialState ={
       input:'',
       imageUrl:'',
-      box:{},
+      box:[{
+        leftCol:0,
+        topRow:0,
+        rightCol:0,
+        bottomRow:0
+        },  ],
       route:'signin',
       isSignedIn:false,
       user:{
@@ -71,17 +76,25 @@ class App extends Component {
 
   //For Calculating the Box Co-ordinates
   calculateFaceLocation=(data)=>{
-    const clarifaiFace=data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image=document.getElementById('inputimage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow : clarifaiFace.top_row * height,
-      rightCol : width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height), 
+    var boundaries=[];
+    const array=data.outputs[0].data.regions;
+    for(let i=0;i<array.length ; i++) {
+      const clarifaiFace=array[i].region_info.bounding_box;
+      const image=document.getElementById('inputimage');
+      const width = Number(image.width);
+      const height = Number(image.height);
+      let obj = {
+        leftCol: clarifaiFace.left_col * width,
+        topRow : clarifaiFace.top_row * height,
+        rightCol : width - (clarifaiFace.right_col * width),
+        bottomRow: height - (clarifaiFace.bottom_row * height) 
+      }
+      boundaries.push(obj);
     }
-  }
+    return boundaries;
+}
+   
+    
 
   //Displaying the box around faces
   displayFaceBox=(box)=>{
@@ -128,7 +141,8 @@ class App extends Component {
         })
         .catch(console.log)
       }
-      this.displayFaceBox(this.calculateFaceLocation(response))
+      const boundaries=this.calculateFaceLocation(response);
+      this.displayFaceBox(boundaries);
       })
     .catch(error => console.log(error));
   }
