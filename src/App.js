@@ -30,8 +30,7 @@ const initialState = {
     password: "",
     entries: 0,
     joined: ""
-  },
-  components: null
+  }
 };
 
 class App extends Component {
