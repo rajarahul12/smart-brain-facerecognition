@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import Particles from 'react-particles-js';
 import Particle from "./components/Particle/Particle";
 import "./App.css";
 import Signin from "./components/Signin/Signin";
@@ -10,32 +9,6 @@ import Rank from "./components/Rank/Rank";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import "tachyons";
-
-/*
-const particleOptions1={
-  particles:{
-    number:{
-      value:100,
-      density:{
-        enable:true,
-        value_area:900
-      }
-    }
-  }
-};
-
-const particleOptions2={
-  particles:{
-    number:{
-      value:40,
-      density:{
-        enable:true,
-        value_area:900
-      }
-    }
-  }
-};
-*/
 
 const initialState = {
   input: "",
@@ -57,7 +30,8 @@ const initialState = {
     password: "",
     entries: 0,
     joined: ""
-  }
+  },
+  components: null
 };
 
 class App extends Component {
