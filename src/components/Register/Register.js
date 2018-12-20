@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./Register.css";
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class Register extends Component {
   };
 
   onSubmitRegister = () => {
-    fetch("https://gorgeous-mesa-verde-76417.herokuapp.com/register", {
+    fetch("http://localhost:3000/register", {
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -39,6 +39,7 @@ class Register extends Component {
         if (user.id) {
           this.props.loadUser(user);
           this.props.onRouteChange("home");
+          console.log(user);
         } else if (user === "incorrect form submission") {
           document.getElementById("err").textContent =
             "* All fields are mandatory";
@@ -58,7 +59,7 @@ class Register extends Component {
   render() {
     return (
       <div>
-        <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+        <article className="br3 ba dark-gray b--black-10 mv4 w1-100 w-50-m w-25-l mw6 shadow-5 center">
           <main className="pa4 black-80">
             <div className="measure">
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -70,7 +71,7 @@ class Register extends Component {
                   </label>
                   <input
                     onChange={this.onNameChange}
-                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w1-100"
                     type="text"
                     name="name"
                     id="name"
@@ -82,7 +83,7 @@ class Register extends Component {
                   </label>
                   <input
                     onChange={this.onEmailChange}
-                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w1-100"
                     type="email"
                     name="email-address"
                     id="email-address"

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./Signin.css";
 class Signin extends Component {
   constructor(props) {
     super(props);
@@ -17,8 +17,13 @@ class Signin extends Component {
     this.setState({ signInPassword: event.target.value });
   };
 
+  //Saving the JWT Token
+  saveAuthTokenInSession = token => {
+    window.sessionStorage.setItem("token", token);
+  };
+
   onSubmitSignIn = () => {
-    fetch("https://gorgeous-mesa-verde-76417.herokuapp.com/signin", {
+    fetch("http://localhost:3000/signin", {
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -29,16 +34,30 @@ class Signin extends Component {
       })
     })
       .then(res => res.json())
-      .then(user => {
-        if (user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange("home");
-        } else if (user === "wrong credentials") {
+      .then(data => {
+        if (data.userId && data.success === "true") {
+          this.saveAuthTokenInSession(data.token);
+          fetch(`http://localhost:3000/profile/${data.userId}`, {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: data.token
+            }
+          })
+            .then(res => res.json())
+            .then(user => {
+              if (user && user.email) {
+                this.props.loadUser(user);
+                this.props.onRouteChange("home");
+              }
+            })
+            .catch(err => console.log(err));
+        } else if (data === "wrong credentials") {
           document.getElementById("err").textContent = "* Invalid Credentials";
           setTimeout(() => {
             document.getElementById("err").textContent = "";
           }, 3000);
-        } else if (user === "incorrect form submission") {
+        } else if (data === "incorrect form submission") {
           document.getElementById("err").textContent =
             "* All fields are mandatory";
           setTimeout(() => {
@@ -53,7 +72,7 @@ class Signin extends Component {
     const { onRouteChange } = this.props;
     return (
       <div>
-        <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+        <article className="br3 ba dark-gray b--black-10 mv4 w1-100 w-50-m w-25-l mw6 shadow-5 center">
           <main className="pa4 black-80">
             <div className="measure">
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -65,7 +84,7 @@ class Signin extends Component {
                   </label>
                   <input
                     onChange={this.onEmailChange}
-                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w1-100"
                     type="email"
                     name="email-address"
                     id="email-address"
@@ -77,7 +96,7 @@ class Signin extends Component {
                   </label>
                   <input
                     onChange={this.onPasswordChange}
-                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w1-100"
                     type="password"
                     name="password"
                     id="password"

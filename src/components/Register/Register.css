@@ -1,0 +1,7 @@
+.w1-100 {
+  width: 100%;
+}
+
+.hover-bg-black:hover {
+  background-color: #000 !important;
+}
